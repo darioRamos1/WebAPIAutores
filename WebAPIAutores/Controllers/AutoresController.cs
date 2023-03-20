@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPIAutores.Entidades;
+using WebAPIAutores.Filtros;
 using WebAPIAutores.Servicios;
 
 namespace WebAPIAutores.Controllers
@@ -39,7 +40,8 @@ namespace WebAPIAutores.Controllers
             return await context.Autores.Include(x => x.Libros).ToListAsync();
         }
         [HttpGet("GUID")]
-      //  [Authorize]
+        //  [Authorize]
+        [ServiceFilter(typeof(MiFiltrodeAccion))]
         public ActionResult ObtenerGuids()
         {
             return Ok(new

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.Xml;
 using System.Text.Json.Serialization;
+using WebAPIAutores.Filtros;
 using WebAPIAutores.Middleware;
 using WebAPIAutores.Servicios;
 
@@ -36,7 +37,7 @@ namespace WebAPIAutores
             services.AddTransient<ServicioTransient>();
             services.AddScoped<ServicioScoped>();
             services.AddSingleton<ServicioSingleton>();
-
+            services.AddTransient<MiFiltrodeAccion>();
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
