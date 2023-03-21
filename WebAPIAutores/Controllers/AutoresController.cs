@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPIAutores.Entidades;
+using WebAPIAutores.Filtros;
 using WebAPIAutores.Servicios;
 
 namespace WebAPIAutores.Controllers
@@ -35,11 +36,14 @@ namespace WebAPIAutores.Controllers
 
         public async Task<ActionResult<List<Autor>>> Get()
         {
+            // el siguiente throw es para probar el filtro de excepcion
+            throw new NotImplementedException();
             logger.LogInformation("Estamos obteniendo los autores");
             return await context.Autores.Include(x => x.Libros).ToListAsync();
         }
         [HttpGet("GUID")]
-      //  [Authorize]
+        //  [Authorize]
+        [ServiceFilter(typeof(MiFiltrodeAccion))]
         public ActionResult ObtenerGuids()
         {
             return Ok(new
