@@ -36,6 +36,8 @@ namespace WebAPIAutores.Controllers
 
         public async Task<ActionResult<List<Autor>>> Get()
         {
+            // el siguiente throw es para probar el filtro de excepcion
+            throw new NotImplementedException();
             logger.LogInformation("Estamos obteniendo los autores");
             return await context.Autores.Include(x => x.Libros).ToListAsync();
         }
