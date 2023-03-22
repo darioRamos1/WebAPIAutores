@@ -43,6 +43,8 @@ namespace WebAPIAutores
             services.AddScoped<ServicioScoped>();
             services.AddSingleton<ServicioSingleton>();
             services.AddTransient<MiFiltrodeAccion>();
+            // este es el que me permite hacer el serivicio hosteado
+            services.AddHostedService<EscribirEnArchivo>();
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
