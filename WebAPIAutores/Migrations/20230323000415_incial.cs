@@ -5,19 +5,32 @@
 namespace WebAPIAutores.Migrations
 {
     /// <inheritdoc />
-    public partial class nueva_entidad_libro : Migration
+    public partial class incial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Autores",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Autores", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Libros",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AutorId = table.Column<int>(type: "int", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
+                    AutorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -26,8 +39,7 @@ namespace WebAPIAutores.Migrations
                         name: "FK_Libros_Autores_AutorId",
                         column: x => x.AutorId,
                         principalTable: "Autores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -41,6 +53,9 @@ namespace WebAPIAutores.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Libros");
+
+            migrationBuilder.DropTable(
+                name: "Autores");
         }
     }
 }

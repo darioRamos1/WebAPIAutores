@@ -4,7 +4,6 @@ using System.Security.Cryptography.Xml;
 using System.Text.Json.Serialization;
 using WebAPIAutores.Filtros;
 using WebAPIAutores.Middleware;
-using WebAPIAutores.Servicios;
 
 namespace WebAPIAutores
 {
@@ -35,6 +34,7 @@ namespace WebAPIAutores
             services.AddSwaggerGen();
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+            /*
             // esto hace parte de la inyeccion de dependencia
             services.AddTransient<IServicio, ServicioA>();
 
@@ -45,7 +45,7 @@ namespace WebAPIAutores
             services.AddTransient<MiFiltrodeAccion>();
             // este es el que me permite hacer el serivicio hosteado
             services.AddHostedService<EscribirEnArchivo>();
-
+            */
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
@@ -53,7 +53,7 @@ namespace WebAPIAutores
             //   app.UseMiddleware<LoguearRespuestaMiddleware>();
             // este permite condicionar a que middleware se usan
             app.UseLoguearRespuesta();
-            app.Map("/ruta1", app =>
+           /* app.Map("/ruta1", app =>
             {
                 app.Run(async contexto =>
                 {
@@ -61,7 +61,7 @@ namespace WebAPIAutores
                 });
 
             });
-
+           */
             // Configure the HTTP request pipeline.
             if (env.IsDevelopment())
             {

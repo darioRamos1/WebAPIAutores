@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPIAutores.Entidades;
 using WebAPIAutores.Filtros;
-using WebAPIAutores.Servicios;
 
 namespace WebAPIAutores.Controllers
 {
@@ -13,49 +12,23 @@ namespace WebAPIAutores.Controllers
     public class AutoresController : ControllerBase
     {
         private readonly ApplicationDbContext context;
-        private readonly IServicio servicio;
-        private readonly ServicioScoped servicioScoped;
-        private readonly ServicioSingleton servicioSingleton;
-        private readonly ServicioTransient servicioTransient;
-        private readonly ILogger<AutoresController> logger;
+   
 
-        public AutoresController(ApplicationDbContext context, IServicio servicio, ServicioScoped servicioScoped,
-            ServicioSingleton servicioSingleton, ServicioTransient servicioTransient, ILogger<AutoresController> logger)
+        public AutoresController(ApplicationDbContext context)
         {
             this.context = context;
-            this.servicio = servicio;
-            this.servicioScoped = servicioScoped;
-            this.servicioSingleton = servicioSingleton;
-            this.servicioTransient = servicioTransient;
-            this.logger = logger;
+      
         }
 
         [HttpGet] //api/autores
         [HttpGet("listado")] //api/autores/listado
-        [HttpGet("/listado")] // listado
 
         public async Task<ActionResult<List<Autor>>> Get()
         {
-            // el siguiente throw es para probar el filtro de excepcion
-            throw new NotImplementedException();
-            logger.LogInformation("Estamos obteniendo los autores");
+ 
             return await context.Autores.Include(x => x.Libros).ToListAsync();
         }
-        [HttpGet("GUID")]
-        //  [Authorize]
-        [ServiceFilter(typeof(MiFiltrodeAccion))]
-        public ActionResult ObtenerGuids()
-        {
-            return Ok(new
-            {
-                AutoresControllerTransient = servicioTransient.Guid,
-                ServicioA_Transient = servicio.ObtenerTransient(),
-                AutoresControllerScoped = servicioScoped.Guid,
-                ServicioA_Scoped = servicio.ObtenerScoped(),
-                AutoresControllerSinglenton = servicioSingleton.Guid,
-                ServicioA_Singleton = servicio.ObtenerSingleton(),
-            });
-        }
+     
         [HttpGet("primerautor")]
         //puedo rescartar info de un querystring
         public async Task<ActionResult<Autor>> PrimerAutor([FromHeader] int miValor, [FromQuery] string nombre)
