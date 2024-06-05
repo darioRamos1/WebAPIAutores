@@ -9,6 +9,7 @@ namespace WebAPIAutores.Entidades
         [PrimeraLetraMayuscula]
         [StringLength(maximumLength:120)]
         public string Nombre { get; set; }
+        public List<Comentario> Comentarios { get; set; }
 
     }
 }
